@@ -1,0 +1,28 @@
+{
+  "data": [
+    {
+      "code": "CSE",
+      "name": "Computer Science & Engineering"
+    },
+    {
+      "code": "CSIT",
+      "name": "CSIT"
+    },
+    {
+      "code": "EEE",
+      "name": "EEE"
+    },
+    {
+      "code": "Civil",
+      "name": "Civil"
+    },
+    {
+      "code": "Architecture",
+      "name": "Architecture"
+    },
+    {
+      "code": "Mechanical",
+      "name": "Mechanical"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+
+group = 'com.problemfighter.pfspring.webtestmodule'
+version = '1.0.0'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.kafka:spring-kafka'
+}
+
