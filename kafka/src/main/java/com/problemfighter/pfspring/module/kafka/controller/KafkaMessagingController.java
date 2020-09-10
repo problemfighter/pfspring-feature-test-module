@@ -1,7 +1,7 @@
-package com.problemfighter.pfspring.webtestmodule.othertask.kafka.controller;
+package com.problemfighter.pfspring.module.kafka.controller;
 
 
-import com.problemfighter.pfspring.webtestmodule.othertask.kafka.model.ProduceMessage;
+import com.problemfighter.pfspring.module.kafka.model.ProduceMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.GetMapping;

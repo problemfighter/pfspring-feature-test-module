@@ -1,4 +1,4 @@
-package com.problemfighter.pfspring.webtestmodule.othertask.kafka.model;
+package com.problemfighter.pfspring.module.kafka.model;
 
 public class ProduceMessage {
 

@@ -1,8 +1,8 @@
-package com.problemfighter.pfspring.webtestmodule.othertask.kafka.config;
+package com.problemfighter.pfspring.module.kafka.config;
 
 
 import org.springframework.kafka.support.serializer.JsonDeserializer;
-import com.problemfighter.pfspring.webtestmodule.othertask.kafka.model.ProduceMessage;
+import com.problemfighter.pfspring.module.kafka.model.ProduceMessage;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;

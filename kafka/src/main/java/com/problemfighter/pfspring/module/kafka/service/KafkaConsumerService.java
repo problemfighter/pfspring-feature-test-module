@@ -1,6 +1,6 @@
-package com.problemfighter.pfspring.webtestmodule.othertask.kafka.service;
+package com.problemfighter.pfspring.module.kafka.service;
 
-import com.problemfighter.pfspring.webtestmodule.othertask.kafka.model.ProduceMessage;
+import com.problemfighter.pfspring.module.kafka.model.ProduceMessage;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
