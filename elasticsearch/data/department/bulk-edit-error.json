@@ -1,0 +1,34 @@
+{
+  "data": [
+    {
+      "id": 2,
+      "uuid": "UUUUUUU",
+      "name": "CSIT",
+      "code": "Computer Science & Information Technology"
+    },
+    {
+      "id": 3,
+      "name": "EEE",
+      "code": "Civil"
+    },
+    {
+      "id": 4,
+      "name": "Civil Engineering",
+      "code": "Civil"
+    },
+    {
+      "id": 5,
+      "name": "Architecture Engineering",
+      "code": "Architecture"
+    },
+    {
+      "id": 6,
+      "name": "Mechanical Engineering",
+      "code": "Mechanical"
+    },
+    {
+      "name": "Other Engineering",
+      "code": "Other"
+    }
+  ]
+}

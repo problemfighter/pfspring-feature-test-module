@@ -1,0 +1,9 @@
+
+
+* https://programming.vip/docs/combination-query-aggregation-query.html
+* https://medium.com/@sourav.pati09/how-to-use-java-high-level-rest-client-with-spring-boot-to-talk-to-aws-elasticsearch-2b6106f2e2c
+* https://www.journaldev.com/18148/spring-boot-elasticsearch
+* https://www.hameister.org/SpringBootElasticsearch.html
+* https://medium.com/faun/java-high-level-rest-client-elasticsearch-7-be4fb247c286
+* https://www.elastic.co/guide/en/elasticsearch/client/java-rest/current/index.html
+* https://www.programcreek.com/java-api-examples/?api=org.elasticsearch.search.aggregations.AggregationBuilders

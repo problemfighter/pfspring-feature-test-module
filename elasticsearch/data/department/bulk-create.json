@@ -1,0 +1,51 @@
+[
+  {
+    "code": "CSE",
+    "name": "Computer Science & Engineering"
+  },
+  {
+    "code": "CSIT",
+    "name": "CSIT"
+  },
+  {
+    "code": "EEE",
+    "name": "EEE"
+  },
+  {
+    "code": "Civil",
+    "name": "Civil"
+  },
+  {
+    "code": "Architecture",
+    "name": "Architecture"
+  },
+  {
+    "code": "Mechanical",
+    "name": "Mechanical"
+  },
+  {
+    "uuid": "UUUUUUU",
+    "name": "CSIT",
+    "code": "Computer Science & Information Technology"
+  },
+  {
+    "name": "EEE",
+    "code": "Civil"
+  },
+  {
+    "name": "Civil Engineering",
+    "code": "Civil"
+  },
+  {
+    "name": "Architecture Engineering",
+    "code": "Architecture"
+  },
+  {
+    "name": "Mechanical Engineering",
+    "code": "Mechanical"
+  },
+  {
+    "name": "Other Engineering",
+    "code": "Other"
+  }
+]
