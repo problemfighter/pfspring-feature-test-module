@@ -19,9 +19,11 @@ public class EsDepartment {
     @Field(type = FieldType.Keyword)
     public String code;
 
+    @Field(type = FieldType.Text)
     public String description;
 
 
+    @Field(type = FieldType.Text)
     public String uuid;
 
 

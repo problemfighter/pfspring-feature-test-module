@@ -8,8 +8,11 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.Aggregation;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.BucketOrder;
+import org.elasticsearch.search.aggregations.bucket.filter.Filters;
+import org.elasticsearch.search.aggregations.bucket.filter.FiltersAggregator;
 import org.elasticsearch.search.aggregations.bucket.terms.StringTerms;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
@@ -121,10 +124,47 @@ public class EsDepartmentService {
 
     }
 
+    public void groupBy(){
+
+        try{
+            AggregationBuilder aggregation =
+                    AggregationBuilders
+                            .filters("agg",
+                                    new FiltersAggregator.KeyedFilter("men", QueryBuilders.termQuery("code", "CSE")),
+                                    new FiltersAggregator.KeyedFilter("women", QueryBuilders.termQuery("code", "CSIT")));
+
+            SearchSourceBuilder builder = new SearchSourceBuilder().aggregation(aggregation);
+            SearchRequest searchRequest = new SearchRequest();
+            searchRequest.source(builder);
+            SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+
+
+            Filters agg = searchResponse.getAggregations().get("agg");
+
+            for (Filters.Bucket entry : agg.getBuckets()) {
+                String key = entry.getKeyAsString();            // bucket key
+                long docCount = entry.getDocCount();            // Doc count
+                System.out.printf("key [{}], doc_count [{}]", key, docCount);
+            }
+        }catch (Exception ignore){
+
+        }
+
+    }
+
     public void countCse(){
         try{
+            groupBy();
             ValueCountAggregationBuilder count = AggregationBuilders.count("count").field("code");
-            SearchSourceBuilder builder = new SearchSourceBuilder().aggregation(count);
+//            SearchSourceBuilder builder = new SearchSourceBuilder().aggregation(count);
+
+//            SearchSourceBuilder builder = new SearchSourceBuilder().aggregation(AggregationBuilders
+//                    .global("agg")
+//                    .subAggregation(AggregationBuilders.terms("genders").field("code")));
+
+            SearchSourceBuilder builder = new SearchSourceBuilder().aggregation(AggregationBuilders
+                    .filter("agg", QueryBuilders.termQuery("code", "CSE")));
+
 
             SearchRequest searchRequest = new SearchRequest();
             searchRequest.source(builder);
