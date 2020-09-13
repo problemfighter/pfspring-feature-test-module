@@ -1,6 +1,6 @@
 package com.problemfighter.pfspring.webtestmodule.service;
 
-import com.problemfighter.pfspring.restapi.inter.MethodStructure;
+import com.problemfighter.pfspring.restapi.inter.RestApiAction;
 import com.problemfighter.pfspring.restapi.rr.RequestResponse;
 import com.problemfighter.pfspring.restapi.rr.request.RequestBulkData;
 import com.problemfighter.pfspring.restapi.rr.request.RequestData;
@@ -18,7 +18,7 @@ import java.util.Optional;
 
 
 @Service
-public class DepartmentService implements RequestResponse, MethodStructure<DepartmentMasterDTO, DepartmentDetailDTO, DepartmentUpdateDTO> {
+public class DepartmentService implements RequestResponse, RestApiAction<DepartmentMasterDTO, DepartmentDetailDTO, DepartmentUpdateDTO> {
 
 
     @Autowired

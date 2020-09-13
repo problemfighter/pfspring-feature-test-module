@@ -1,7 +1,7 @@
 package com.problemfighter.pfspring.webtestmodule.controller.api;
 
 
-import com.problemfighter.pfspring.restapi.inter.MethodStructure;
+import com.problemfighter.pfspring.restapi.inter.RestApiAction;
 import com.problemfighter.pfspring.restapi.rr.request.RequestBulkData;
 import com.problemfighter.pfspring.restapi.rr.request.RequestData;
 import com.problemfighter.pfspring.restapi.rr.response.BulkResponse;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/department")
-public class ApiV1DepartmentController implements MethodStructure<DepartmentMasterDTO, DepartmentDetailDTO, DepartmentUpdateDTO> {
+public class ApiV1DepartmentController implements RestApiAction<DepartmentMasterDTO, DepartmentDetailDTO, DepartmentUpdateDTO> {
 
     @Autowired
     private DepartmentService departmentService;
