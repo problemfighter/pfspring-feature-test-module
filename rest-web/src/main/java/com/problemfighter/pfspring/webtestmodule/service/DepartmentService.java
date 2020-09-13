@@ -40,29 +40,29 @@ public class DepartmentService implements RequestResponse, MethodStructure<Depar
     public MessageResponse create(RequestData<DepartmentDetailDTO> data) {
         Department department = requestProcessor().process(data, Department.class);
         departmentRepository.save(department);
-        return responseProcessor().successMessage("Created");
+        return responseProcessor().response("Created");
     }
 
 
     @Override
     public PageableResponse<DepartmentMasterDTO> list(Integer page, Integer size, String sort, String field, String search) {
-        return responseProcessor().pageableResponse(departmentRepository.list(
+        return responseProcessor().response(departmentRepository.list(
                 requestProcessor().paginationNSort(page, size, sort, field), false),
                 DepartmentMasterDTO.class);
     }
 
     public PageableResponse<DepartmentMasterDTO> trash(Integer page, Integer size, String sort, String field, String search) {
-        return responseProcessor().pageableResponse(departmentRepository.list(requestProcessor().paginationNSort(page, size, sort, field), true), DepartmentMasterDTO.class);
+        return responseProcessor().response(departmentRepository.list(requestProcessor().paginationNSort(page, size, sort, field), true), DepartmentMasterDTO.class);
     }
 
     @Override
     public PageableResponse<DepartmentDetailDTO> detailList(Integer page, Integer size, String sort, String field, String search) {
-        return responseProcessor().pageableResponse(departmentRepository.list(requestProcessor().paginationNSort(page, size, sort, field), false), DepartmentDetailDTO.class);
+        return responseProcessor().response(departmentRepository.list(requestProcessor().paginationNSort(page, size, sort, field), false), DepartmentDetailDTO.class);
     }
 
     @Override
     public DetailsResponse<DepartmentDetailDTO> details(Long id) {
-        return responseProcessor().detailsResponse(departmentRepository.findById(id), DepartmentDetailDTO.class, "Item not found");
+        return responseProcessor().response(departmentRepository.findById(id), DepartmentDetailDTO.class, "Item not found");
     }
 
     public Department validateAndGetDepartmentById(Long id) {
@@ -75,7 +75,7 @@ public class DepartmentService implements RequestResponse, MethodStructure<Depar
         Department department = validateAndGetDepartmentById(requestProcessor().getId(data));
         department = requestProcessor().process(data, department);
         departmentRepository.save(department);
-        return responseProcessor().successMessage("Updated");
+        return responseProcessor().response("Updated");
     }
 
     @Override
@@ -84,7 +84,7 @@ public class DepartmentService implements RequestResponse, MethodStructure<Depar
         if (bulkErrorDst.entityList.size() != 0) {
             departmentRepository.saveAll(bulkErrorDst.entityList);
         }
-        return responseProcessor().bulkResponse(bulkErrorDst, DepartmentDetailDTO.class);
+        return responseProcessor().response(bulkErrorDst, DepartmentDetailDTO.class);
     }
 
     public Iterable<Department> getAllByIds(List<Long> ids) {
@@ -96,7 +96,7 @@ public class DepartmentService implements RequestResponse, MethodStructure<Depar
         Iterable<Department> departments = getAllByIds(dataUtil().getAllId(data));
         BulkErrorValidEntities<DepartmentUpdateDTO, Department> bulkErrorValidEntities = dataUtil().merge(departments, data);
         departmentRepository.saveAll(bulkErrorValidEntities.entityList);
-        return responseProcessor().bulkResponse(bulkErrorValidEntities, DepartmentUpdateDTO.class);
+        return responseProcessor().response(bulkErrorValidEntities, DepartmentUpdateDTO.class);
     }
 
     @Override
@@ -104,14 +104,14 @@ public class DepartmentService implements RequestResponse, MethodStructure<Depar
         Iterable<Department> departmentList = departmentRepository.findAllById(data.getData());
         dataUtil().markAsDeleted(departmentList);
         departmentRepository.saveAll(departmentList);
-        return responseProcessor().successMessage("Deleted");
+        return responseProcessor().response("Deleted");
     }
 
     @Override
     public MessageResponse hardDelete(RequestBulkData<Long> ids) {
         Iterable<Department> departments = getAllByIds(ids.getData());
         departmentRepository.deleteAll(departments);
-        return responseProcessor().successMessage("Deleted");
+        return responseProcessor().response("Deleted");
     }
 
     @Override
@@ -119,7 +119,7 @@ public class DepartmentService implements RequestResponse, MethodStructure<Depar
         Department department = validateAndGetDepartmentById(id);
         dataUtil().markAsDeleted(department);
         departmentRepository.save(department);
-        return responseProcessor().successMessage("Deleted");
+        return responseProcessor().response("Deleted");
     }
 
     @Override
