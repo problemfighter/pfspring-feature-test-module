@@ -80,11 +80,11 @@ public class DepartmentService implements RequestResponse, RestApiAction<Departm
 
     @Override
     public BulkResponse<DepartmentDetailDTO> bulkCreate(RequestBulkData<DepartmentDetailDTO> data) {
-        BulkErrorValidEntities<DepartmentDetailDTO, Department> bulkErrorDst = requestProcessor().bulkProcess(data, Department.class);
-        if (bulkErrorDst.entityList.size() != 0) {
-            departmentRepository.saveAll(bulkErrorDst.entityList);
+        BulkErrorValidEntities<DepartmentDetailDTO, Department> bulkData = requestProcessor().process(data, Department.class);
+        if (bulkData.isValidEntities()) {
+            departmentRepository.saveAll(bulkData.getEntities());
         }
-        return responseProcessor().response(bulkErrorDst, DepartmentDetailDTO.class);
+        return responseProcessor().response(bulkData, DepartmentDetailDTO.class);
     }
 
     public Iterable<Department> getAllByIds(List<Long> ids) {
@@ -127,6 +127,6 @@ public class DepartmentService implements RequestResponse, RestApiAction<Departm
         Iterable<Department> departmentList = departmentRepository.findAllById(ids.getData());
         dataUtil().markAsUndeleted(departmentList);
         departmentRepository.saveAll(departmentList);
-        return responseProcessor().successMessage("Restored");
+        return responseProcessor().response("Restored");
     }
 }
