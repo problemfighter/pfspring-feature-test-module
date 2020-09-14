@@ -1,8 +1,6 @@
 package com.problemfighter.pfspring.webtestmodule.example.model.entity;
 
-import com.problemfighter.pfspring.restapi.inter.model.RestDTO;
 import com.problemfighter.pfspring.restapi.inter.model.RestEntity;
-
 import javax.persistence.*;
 
 @Entity

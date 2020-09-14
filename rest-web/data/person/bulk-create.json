@@ -1,16 +1,14 @@
 {
   "data": [
     {
-      "data": {
-        "address": "Dhaka, Bangladesh",
-        "age": 28,
-        "email": "problemfighter.com@gmail.com",
-        "firstName": "Touhid",
-        "lastName": "Mia",
-        "gender": "Male",
-        "mobile": "123456",
-        "occupation": "Software Engineer"
-      }
+      "address": "Dhaka, Bangladesh",
+      "age": 28,
+      "email": "problemfighter.com@gmail.com",
+      "firstName": "Touhid",
+      "lastName": "Mia",
+      "gender": "Male",
+      "mobile": "123456",
+      "occupation": "Software Engineer"
     },
     {
       "address": "Rangpur, Bangladesh",
