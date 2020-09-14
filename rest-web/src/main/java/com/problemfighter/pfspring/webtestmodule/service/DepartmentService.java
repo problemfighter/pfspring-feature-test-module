@@ -125,6 +125,9 @@ public class DepartmentService implements RequestResponse, RestApiAction<Departm
     @Override
     public MessageResponse bulkRestore(RequestBulkData<Long> ids) {
         Iterable<Department> departmentList = departmentRepository.findAllById(ids.getData());
+        if (dataUtil().isEmpty(departmentList)) {
+            return responseProcessor().error("No data found!");
+        }
         dataUtil().markAsUndeleted(departmentList);
         departmentRepository.saveAll(departmentList);
         return responseProcessor().response("Restored");

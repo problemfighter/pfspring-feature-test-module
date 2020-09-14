@@ -1,7 +1,7 @@
 package com.problemfighter.pfspring.webtestmodule.model.intercept;
 
 import com.problemfighter.pfspring.restapi.common.ApiRestException;
-import com.problemfighter.pfspring.common.common.CopyInterceptor;
+import com.problemfighter.pfspring.restapi.inter.CopyInterceptor;
 import com.problemfighter.pfspring.webtestmodule.model.dto.department.DepartmentDetailDTO;
 import com.problemfighter.pfspring.webtestmodule.model.dto.department.DepartmentUpdateDTO;
 import com.problemfighter.pfspring.webtestmodule.model.entity.Department;

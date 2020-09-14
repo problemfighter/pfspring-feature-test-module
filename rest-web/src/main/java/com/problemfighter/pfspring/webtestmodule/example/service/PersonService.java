@@ -76,6 +76,9 @@ public class PersonService implements RequestResponse, RestApiAction<PersonMaste
     @Override
     public MessageResponse bulkDelete(RequestBulkData<Long> data) {
         Iterable<Person> entities = personRepository.findAllById(data.getData());
+        if (dataUtil().isEmpty(entities)) {
+            return responseProcessor().error("Content not found");
+        }
         dataUtil().markAsDeleted(entities);
         personRepository.saveAll(entities);
         return responseProcessor().response("Deleted");
@@ -84,6 +87,9 @@ public class PersonService implements RequestResponse, RestApiAction<PersonMaste
     @Override
     public MessageResponse hardDelete(RequestBulkData<Long> data) {
         Iterable<Person> entities = personRepository.findAllById(data.getData());
+        if (dataUtil().isEmpty(entities)) {
+            return responseProcessor().error("Content not found");
+        }
         personRepository.deleteAll(entities);
         return responseProcessor().response("Deleted");
     }
@@ -100,8 +106,19 @@ public class PersonService implements RequestResponse, RestApiAction<PersonMaste
     @Override
     public MessageResponse bulkRestore(RequestBulkData<Long> data) {
         Iterable<Person> entities = personRepository.findAllById(data.getData());
+        if (dataUtil().isEmpty(entities)) {
+            return responseProcessor().error("Content not found");
+        }
         dataUtil().markAsUndeleted(entities);
         personRepository.saveAll(entities);
         return responseProcessor().response("Restored");
+    }
+
+    public Boolean isEmailAlreadyExist(String email) {
+        return personRepository.findByEmail(email) != null;
+    }
+
+    public Person findByEmailAndId(String email, Long id) {
+        return personRepository.findByEmailAndId(email, id);
     }
 }

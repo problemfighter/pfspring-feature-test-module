@@ -3,13 +3,14 @@ package com.problemfighter.pfspring.webtestmodule.example.model.dto.person;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.problemfighter.pfspring.restapi.inter.model.RestDTO;
 
 import javax.validation.constraints.NotNull;
 
-public class PersonMasterDTO {
+public class PersonMasterDTO implements RestDTO {
 
     @JsonIgnore
-    public Integer id;
+    public Long id;
 
     @NotNull(message = "Please enter first name")
     public String firstName;
@@ -25,7 +26,7 @@ public class PersonMasterDTO {
     public Double age;
 
     @JsonProperty
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 }

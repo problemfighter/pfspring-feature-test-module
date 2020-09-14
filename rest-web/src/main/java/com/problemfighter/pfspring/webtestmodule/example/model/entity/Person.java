@@ -1,9 +1,12 @@
 package com.problemfighter.pfspring.webtestmodule.example.model.entity;
 
+import com.problemfighter.pfspring.restapi.inter.model.RestDTO;
+import com.problemfighter.pfspring.restapi.inter.model.RestEntity;
+
 import javax.persistence.*;
 
 @Entity
-public class Person {
+public class Person implements RestEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,7 +15,10 @@ public class Person {
     @Column(nullable = false)
     public String firstName;
     public String lastName;
+
+    @Column(unique = true)
     public String email;
+
     public String mobile;
 
     public String occupation;

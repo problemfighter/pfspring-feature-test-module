@@ -10,4 +10,10 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
 
     @Query("SELECT d FROM Person d WHERE d.isDeleted =:isDeleted")
     Page<Person> list(Pageable pageable, Boolean isDeleted);
+
+    @Query("SELECT d FROM Person d WHERE d.email =:email")
+    Person findByEmail(String email);
+
+    @Query("SELECT d FROM Person d WHERE d.email =:email AND d.id =:id")
+    Person findByEmailAndId(String email, Long id);
 }
