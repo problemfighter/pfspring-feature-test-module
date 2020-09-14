@@ -1,6 +1,6 @@
 package com.problemfighter.pfspring.webtestmodule.model.dto.department;
 
-import com.problemfighter.pfspring.common.model.DTOCommon;
+import com.problemfighter.pfspring.webtestmodule.model.common.DTOCommon;
 import com.problemfighter.pfspring.restapi.inter.model.RestDTO;
 import io.swagger.annotations.ApiModel;
 

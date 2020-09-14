@@ -1,7 +1,7 @@
 package com.problemfighter.pfspring.webtestmodule.model.entity;
 
 
-import com.problemfighter.pfspring.common.model.EntityCommon;
+import com.problemfighter.pfspring.webtestmodule.model.common.EntityCommon;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

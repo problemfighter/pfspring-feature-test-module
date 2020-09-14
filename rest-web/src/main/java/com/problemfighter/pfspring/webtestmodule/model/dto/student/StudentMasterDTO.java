@@ -1,6 +1,6 @@
 package com.problemfighter.pfspring.webtestmodule.model.dto.student;
 
-import com.problemfighter.pfspring.common.model.DTOCommon;
+import com.problemfighter.pfspring.webtestmodule.model.common.DTOCommon;
 
 import javax.validation.constraints.NotNull;
 
