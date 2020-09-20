@@ -5,6 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 
 @SpringBootApplication(scanBasePackages = {"com.problemfighter.pfspring.module.es.*"})
-@EnableElasticsearchRepositories("com.problemfighter.pfspring.module.es.repository")
+@EnableElasticsearchRepositories(value = {"com.problemfighter.pfspring.module.es.repository", "com.problemfighter.pfspring.module.es.person.repository"})
 public class ElasticsearchScanner {
 }

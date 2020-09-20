@@ -33,7 +33,7 @@ public class ApiV1EsDepartmentController {
 
     @RequestMapping(value = "/count", method = RequestMethod.GET)
     public Object count() {
-        esDepartmentService.countCse();
+        esDepartmentService.findBySex();
         return null;
     }
 
