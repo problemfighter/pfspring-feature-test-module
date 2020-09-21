@@ -14,11 +14,12 @@ import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.index.query.MatchQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.TermsQueryBuilder;
+import org.elasticsearch.index.query.*;
 import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.metrics.*;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.hibernate.validator.resourceloading.AggregateResourceBundleLocator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -63,8 +64,12 @@ public class EsPersonService implements RequestResponse {
         return responseProcessor().response(bulkData, EsPerson.class);
     }
 
-    private SearchRequest getSearchRequest() {
-        return new SearchRequest(EsIndex.person);
+    private SearchRequest getSearchRequest(SearchSourceBuilder sourceBuilder) {
+        return new SearchRequest(EsIndex.person).source(sourceBuilder);
+    }
+
+    private SearchSourceBuilder getSourceBuilder(QueryBuilder query) {
+        return new SearchSourceBuilder().query(query);
     }
 
     private <D> List<D> parseResponse(SearchResponse searchResponse, Class<D> klass) {
@@ -89,10 +94,8 @@ public class EsPersonService implements RequestResponse {
 
     public DetailsListResponse<EsPerson> findBySex(String sex) {
         MatchQueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("sex", sex);
-        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        searchSourceBuilder.query(matchQueryBuilder);
-        SearchRequest searchRequest = getSearchRequest();
-        searchRequest.source(searchSourceBuilder);
+        SearchSourceBuilder searchSourceBuilder = getSourceBuilder(matchQueryBuilder);
+        SearchRequest searchRequest = getSearchRequest(searchSourceBuilder);
         try {
             SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
             List<EsPerson> list = parseResponse(searchResponse, EsPerson.class);
@@ -105,14 +108,122 @@ public class EsPersonService implements RequestResponse {
         return null;
     }
 
+    public DetailsListResponse<EsPerson> findByAgeRange(Double start, Double end) {
+        QueryBuilder ageQuery = QueryBuilders.rangeQuery("age").from(start).to(end);
+        SearchSourceBuilder searchSourceBuilder = getSourceBuilder(ageQuery);
+        SearchRequest searchRequest = getSearchRequest(searchSourceBuilder);
+        try {
+            SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+            List<EsPerson> list = parseResponse(searchResponse, EsPerson.class);
+            DetailsListResponse<EsPerson> response = new DetailsListResponse<>();
+            response.data = list;
+            return response;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public DetailsListResponse<EsPerson> findByNotEqualSex(List<String> sex) {
+        BoolQueryBuilder builder = QueryBuilders.boolQuery();
+        String[] sexArray = new String[sex.size()];
+        sexArray = sex.toArray(sexArray);
+        builder.mustNot(QueryBuilders.termsQuery("sex", sexArray));
+        SearchSourceBuilder searchSourceBuilder = getSourceBuilder(builder);
+        SearchRequest searchRequest = getSearchRequest(searchSourceBuilder);
+        try {
+            SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+            List<EsPerson> list = parseResponse(searchResponse, EsPerson.class);
+            DetailsListResponse<EsPerson> response = new DetailsListResponse<>();
+            response.data = list;
+            return response;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+    public Double averageIncome(){
+        AvgAggregationBuilder aggregationBuilder = AggregationBuilders.avg("agg").field("income");
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.aggregation(aggregationBuilder);
+        SearchRequest searchRequest = getSearchRequest(searchSourceBuilder);
+        try {
+            SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+            Avg out = searchResponse.getAggregations().get("agg");
+            return out.getValue();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Double maxIncome(){
+        MaxAggregationBuilder aggregationBuilder = AggregationBuilders.max("agg").field("income");
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.aggregation(aggregationBuilder);
+        SearchRequest searchRequest = getSearchRequest(searchSourceBuilder);
+        try {
+            SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+            Max out = searchResponse.getAggregations().get("agg");
+            return out.getValue();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Double maxIncomeByOccupation(String occupation){
+        MaxAggregationBuilder aggregationBuilder = AggregationBuilders.max("agg").field("income");
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.aggregation(aggregationBuilder);
+        TermsQueryBuilder termsQueryBuilder = QueryBuilders.termsQuery("occupation", occupation);
+        searchSourceBuilder.query(termsQueryBuilder);
+        SearchRequest searchRequest = getSearchRequest(searchSourceBuilder);
+        try {
+            SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+            Max out = searchResponse.getAggregations().get("agg");
+            return out.getValue();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Double sumOfTotalIncome() {
+        SumAggregationBuilder sumAggregationBuilder = AggregationBuilders.sum("sum_of_all_income").field("income");
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.aggregation(sumAggregationBuilder);
+        SearchRequest searchRequest = getSearchRequest(searchSourceBuilder);
+        try {
+            SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+            Sum sum = searchResponse.getAggregations().get("sum_of_all_income");
+            return sum.getValue();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void distinctOccupation(){
+
+    }
+
+    public void statsAggregation(){
+
+    }
+
+    public void groupByAndCountOccupation(){
+
+    }
+
     public DetailsListResponse<EsPerson> findBySex(List<String> sex) {
         String[] sexArray = new String[sex.size()];
         sexArray = sex.toArray(sexArray);
         TermsQueryBuilder termsQueryBuilder = QueryBuilders.termsQuery("sex", sexArray);
-        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        searchSourceBuilder.query(termsQueryBuilder);
-        SearchRequest searchRequest = getSearchRequest();
-        searchRequest.source(searchSourceBuilder);
+        SearchSourceBuilder searchSourceBuilder = getSourceBuilder(termsQueryBuilder);
+        SearchRequest searchRequest = getSearchRequest(searchSourceBuilder);
         try {
             SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
             List<EsPerson> list = parseResponse(searchResponse, EsPerson.class);

@@ -173,8 +173,10 @@ public class QueryService {
         nativeSearchQueryBuilder.withQuery(matchAllQuery);
         //2.1 Set the search type. The default value is QUERY_THEN_FETCH. Refer to https://blog.csdn.net/wulex/article/details/71081042.
         nativeSearchQueryBuilder.withSearchType(SearchType.QUERY_THEN_FETCH);//Specify the type of index, query only the matching documents from each fragment, then reorder and rank, and get the first size documents.
+
         //2.2 Specify index libraries and document types
      //   nativeSearchQueryBuilder.withIndices("myBlog").withTypes("blog");//Specify the name and type of the index library to query, which is actually the indedName and type set in our document @Document
+
         //2.3 Here comes the point!!! Specify aggregation functions. In this case, take a field grouping aggregation as an example (you can set it according to your own aggregation query requirements)
         //The aggregation function explains: Calculate the frequency of occurrence of the field (assumed to be username) in all documents and rank it in descending order (usually used for a field's thermal ranking)
       //  TermsBuilder termsAggregation = AggregationBuilders.terms("Name for aggregate queries").field("username").order(Terms.Order.count(false));

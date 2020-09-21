@@ -41,4 +41,34 @@ public class ApiV1EsPersonController {
     public DetailsListResponse<EsPerson> findBySex(@RequestBody RequestBulkData<String> data) {
         return esPersonService.findBySex(data.getData());
     }
+
+    @RequestMapping(value = "/find-by-sex-not-in-list", method = RequestMethod.POST)
+    public DetailsListResponse<EsPerson> findBySexNotInList(@RequestBody RequestBulkData<String> data) {
+        return esPersonService.findByNotEqualSex(data.getData());
+    }
+
+    @RequestMapping(value = "/income-sum", method = RequestMethod.GET)
+    public Double incomeSum() {
+        return esPersonService.sumOfTotalIncome();
+    }
+
+    @RequestMapping(value = "/income-max", method = RequestMethod.GET)
+    public Double incomeMax() {
+        return esPersonService.maxIncome();
+    }
+
+    @RequestMapping(value = "/income-avg", method = RequestMethod.GET)
+    public Double incomeAvg() {
+        return esPersonService.averageIncome();
+    }
+
+    @RequestMapping(value = "/income-max-by-occupation", method = RequestMethod.GET)
+    public Double maxIncomeByOccupation(@RequestParam(value = "occupation", defaultValue = "Software Engineer") String occupation) {
+        return esPersonService.maxIncomeByOccupation(occupation);
+    }
+
+    @RequestMapping(value = "/by-age-range", method = RequestMethod.GET)
+    public DetailsListResponse<EsPerson> findByAgeRange(@RequestParam(value = "start", defaultValue = "20") Double start, @RequestParam(value = "end", defaultValue = "25") Double end) {
+        return esPersonService.findByAgeRange(start, end);
+    }
 }
