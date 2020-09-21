@@ -17,6 +17,8 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.*;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.bucket.terms.Terms;
+import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.*;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.hibernate.validator.resourceloading.AggregateResourceBundleLocator;
@@ -27,9 +29,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class EsPersonService implements RequestResponse {
@@ -214,8 +214,23 @@ public class EsPersonService implements RequestResponse {
 
     }
 
-    public void groupByAndCountOccupation(){
-
+    public Map<String, Object> groupByOccupation() {
+        TermsAggregationBuilder termsAggregationBuilder = AggregationBuilders.terms("group_by").field("occupation");
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.aggregation(termsAggregationBuilder);
+        SearchRequest searchRequest = getSearchRequest(searchSourceBuilder);
+        try {
+            SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+            Map<String, Object> res = new HashMap<>();
+            Terms genders = searchResponse.getAggregations().get("group_by");
+            for (Terms.Bucket entry : genders.getBuckets()) {
+                res.put(entry.getKey().toString(), entry.getDocCount());
+            }
+            return res;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public DetailsListResponse<EsPerson> findBySex(List<String> sex) {

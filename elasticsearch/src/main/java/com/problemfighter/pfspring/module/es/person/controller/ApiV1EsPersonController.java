@@ -8,6 +8,8 @@ import com.problemfighter.pfspring.restapi.rr.response.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/es/v1/person")
 public class ApiV1EsPersonController {
@@ -70,5 +72,10 @@ public class ApiV1EsPersonController {
     @RequestMapping(value = "/by-age-range", method = RequestMethod.GET)
     public DetailsListResponse<EsPerson> findByAgeRange(@RequestParam(value = "start", defaultValue = "20") Double start, @RequestParam(value = "end", defaultValue = "25") Double end) {
         return esPersonService.findByAgeRange(start, end);
+    }
+
+    @RequestMapping(value = "/group-by-occupation", method = RequestMethod.GET)
+    public Map<String,Object> groupByOccupation() {
+        return esPersonService.groupByOccupation();
     }
 }
