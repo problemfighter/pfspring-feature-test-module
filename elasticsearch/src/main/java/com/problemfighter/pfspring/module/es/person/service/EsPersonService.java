@@ -206,12 +206,40 @@ public class EsPersonService implements RequestResponse {
         return null;
     }
 
-    public void distinctOccupation(){
-
+    public Long distinctOccupation() {
+        CardinalityAggregationBuilder aggregation = AggregationBuilders.cardinality("agg").field("occupation");
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.aggregation(aggregation);
+        SearchRequest searchRequest = getSearchRequest(searchSourceBuilder);
+        try {
+            SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+            Cardinality agg = searchResponse.getAggregations().get("agg");
+            return agg.getValue();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    public void statsAggregation(){
-
+    public Map<String, Object> statsAggregation() {
+        StatsAggregationBuilder aggregation = AggregationBuilders.stats("agg").field("income");
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.aggregation(aggregation);
+        SearchRequest searchRequest = getSearchRequest(searchSourceBuilder);
+        try {
+            SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+            Map<String, Object> res = new HashMap<>();
+            Stats agg = searchResponse.getAggregations().get("agg");
+            res.put("min", agg.getMin());
+            res.put("max", agg.getMax());
+            res.put("avg", agg.getAvg());
+            res.put("sum", agg.getSum());
+            res.put("count", agg.getCount());
+            return res;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public Map<String, Object> groupByOccupation() {

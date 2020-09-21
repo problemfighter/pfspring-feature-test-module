@@ -78,4 +78,15 @@ public class ApiV1EsPersonController {
     public Map<String,Object> groupByOccupation() {
         return esPersonService.groupByOccupation();
     }
+
+    @RequestMapping(value = "/distinct-occupation", method = RequestMethod.GET)
+    public Long distinctOccupation() {
+        return esPersonService.distinctOccupation();
+    }
+
+    @RequestMapping(value = "/stats-aggregation", method = RequestMethod.GET)
+    public Map<String,Object> statsAggregation() {
+        return esPersonService.statsAggregation();
+    }
+
 }
