@@ -1,6 +1,7 @@
 package com.problemfighter.pfspring.webtestmodule.example.model.entity;
 
 import com.problemfighter.pfspring.restapi.inter.model.RestEntity;
+
 import javax.persistence.*;
 
 @Entity
@@ -27,8 +28,9 @@ public class Person implements RestEntity {
     @Column(nullable = false)
     public Double age;
 
-    @Column(columnDefinition = "TEXT")
-    public String address;
-
     public Boolean isDeleted = false;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id")
+    public Address address;
 }

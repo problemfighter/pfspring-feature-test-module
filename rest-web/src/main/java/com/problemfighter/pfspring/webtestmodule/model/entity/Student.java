@@ -16,10 +16,6 @@ public class Student extends EntityCommon {
     public String mobile;
 
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "address_id")
-    public Address address;
-
     @ManyToOne
     @JoinColumn(name = "department_id")
     public Department department;
