@@ -1,0 +1,2 @@
+. https://dzone.com/articles/quickstart-how-to-use-spring-cache-on-redis
+. https://hellokoding.com/spring-boot-caching-with-redis/
