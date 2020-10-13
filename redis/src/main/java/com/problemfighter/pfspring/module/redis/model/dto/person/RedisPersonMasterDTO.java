@@ -7,9 +7,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.problemfighter.pfspring.restapi.inter.model.RestDTO;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class RedisPersonMasterDTO implements RestDTO {
+public class RedisPersonMasterDTO implements RestDTO, Serializable {
 
     @JsonIgnore
     public Long id;

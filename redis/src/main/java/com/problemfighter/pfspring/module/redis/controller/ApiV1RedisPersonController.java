@@ -99,4 +99,9 @@ public class ApiV1RedisPersonController implements RestApiAction<RedisPersonMast
     public MessageResponse bulkRestore(@RequestBody RequestBulkData<Long> data) {
         return personService.bulkRestore(data);
     }
+
+    @RequestMapping(value = "/clear-cache", method = RequestMethod.GET)
+    public MessageResponse clearCache() {
+        return personService.clearAllCache();
+    }
 }

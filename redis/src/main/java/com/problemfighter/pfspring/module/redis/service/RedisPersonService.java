@@ -11,14 +11,17 @@ import com.problemfighter.pfspring.restapi.rr.request.RequestBulkData;
 import com.problemfighter.pfspring.restapi.rr.request.RequestData;
 import com.problemfighter.pfspring.restapi.rr.response.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import springfox.documentation.annotations.Cacheable;
 
 @Service
 public class RedisPersonService implements RequestResponse, RestApiAction<RedisPersonMasterDTO, RedisPersonDetailDTO, RedisPersonUpdateDTO> {
 
     @Autowired
     private RedisPersonRepository personRepository;
+
+    @Autowired
+    private CacheManagerService cacheManagerService;
 
     @Override
     public MessageResponse create(RequestData<RedisPersonDetailDTO> data) {
@@ -122,5 +125,10 @@ public class RedisPersonService implements RequestResponse, RestApiAction<RedisP
 
     public RedisPerson findByEmailAndId(String email, Long id) {
         return personRepository.findByEmailAndId(email, id);
+    }
+
+    public MessageResponse clearAllCache() {
+        cacheManagerService.cleanAllCache();
+        return responseProcessor().response("Cache Clear");
     }
 }
