@@ -26,7 +26,7 @@ public class RedisPersonService implements RequestResponse, RestApiAction<RedisP
     private CacheManagerService cacheManagerService;
 
     @Override
-    @Cacheable("redis_person_list")
+    @CacheEvict(value = "redis_person_list", allEntries = true)
     public MessageResponse create(RequestData<RedisPersonDetailDTO> data) {
         RedisPerson entity = requestProcessor().process(data, RedisPerson.class);
         personRepository.save(entity);
