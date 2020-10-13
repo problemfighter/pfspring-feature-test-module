@@ -11,6 +11,8 @@ import com.problemfighter.pfspring.restapi.rr.request.RequestBulkData;
 import com.problemfighter.pfspring.restapi.rr.request.RequestData;
 import com.problemfighter.pfspring.restapi.rr.response.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,7 @@ public class RedisPersonService implements RequestResponse, RestApiAction<RedisP
     private CacheManagerService cacheManagerService;
 
     @Override
+    @Cacheable("redis_person_list")
     public MessageResponse create(RequestData<RedisPersonDetailDTO> data) {
         RedisPerson entity = requestProcessor().process(data, RedisPerson.class);
         personRepository.save(entity);
@@ -61,9 +64,11 @@ public class RedisPersonService implements RequestResponse, RestApiAction<RedisP
     }
 
     @Override
+    @CacheEvict(value = "redis_person_list", allEntries = true)
     public MessageResponse update(RequestData<RedisPersonUpdateDTO> data) {
         Long id = requestProcessor().validateId(data, "Id not found");
         RedisPerson entity = dataUtil().validateAndOptionToEntity(personRepository.findById(id), "Content not found");
+        entity = requestProcessor().process(data, entity);
         personRepository.save(entity);
         return responseProcessor().response("Updated");
     }
