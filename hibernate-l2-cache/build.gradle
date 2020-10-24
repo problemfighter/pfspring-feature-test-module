@@ -7,6 +7,6 @@ repositories {
 }
 
 dependencies {
-
+	compile group: 'org.redisson', name: 'redisson', version: '3.13.6'
 }
 
