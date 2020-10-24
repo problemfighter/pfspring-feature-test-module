@@ -1,0 +1,12 @@
+
+group = 'com.problemfighter.pfspring.hl2c'
+version = '1.0.0'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+
+}
+
