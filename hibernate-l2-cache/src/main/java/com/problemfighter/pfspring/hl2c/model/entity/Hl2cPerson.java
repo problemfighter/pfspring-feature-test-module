@@ -1,10 +1,12 @@
 package com.problemfighter.pfspring.hl2c.model.entity;
 
 import com.problemfighter.pfspring.restapi.inter.model.RestEntity;
-
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
+import org.hibernate.annotations.Cache;
 
 @Entity
+@Cache(region = "hl2cPerson", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Hl2cPerson implements RestEntity {
 
     @Id

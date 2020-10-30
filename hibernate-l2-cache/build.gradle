@@ -7,6 +7,7 @@ repositories {
 }
 
 dependencies {
-	compile group: 'org.redisson', name: 'redisson', version: '3.13.6'
+	compile 'org.redisson:redisson-spring-boot-starter:3.13.6'
+	compile group: 'org.redisson', name: 'redisson-hibernate-53', version: '3.13.6'
 }
 
