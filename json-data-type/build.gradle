@@ -1,0 +1,10 @@
+
+group = 'com.problemfighter.pfspring.jdt'
+version = '1.0.0'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {}
+
