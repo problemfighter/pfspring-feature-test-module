@@ -1,8 +1,20 @@
 package com.problemfighter.pfspring.jdt.model.entity;
 
 import com.problemfighter.pfspring.restapi.inter.model.RestEntity;
-import javax.persistence.*;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import com.vladmihalcea.hibernate.type.json.JsonStringType;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
 
+import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
+
+@TypeDefs({
+        @TypeDef(name = "json", typeClass = JsonStringType.class),
+        @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
+})
 @Entity
 public class JdtPerson implements RestEntity {
 
@@ -28,5 +40,9 @@ public class JdtPerson implements RestEntity {
     public Double age;
 
     public Boolean isDeleted = false;
+
+    @Type(type = "json")
+    @Column(columnDefinition = "json")
+    public Set<JdtAddress> addresses;
 
 }

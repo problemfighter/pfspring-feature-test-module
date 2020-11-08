@@ -3,6 +3,7 @@ package com.problemfighter.pfspring.jdt.service;
 import com.problemfighter.pfspring.jdt.model.dto.person.JdtJdtPersonDetailDTO;
 import com.problemfighter.pfspring.jdt.model.dto.person.JdtPersonMasterDTO;
 import com.problemfighter.pfspring.jdt.model.dto.person.JdtJdtPersonUpdateDTO;
+import com.problemfighter.pfspring.jdt.model.entity.JdtAddress;
 import com.problemfighter.pfspring.jdt.model.entity.JdtPerson;
 import com.problemfighter.pfspring.jdt.repository.JdtPersonRepository;
 import com.problemfighter.pfspring.restapi.inter.RestApiAction;
@@ -13,6 +14,8 @@ import com.problemfighter.pfspring.restapi.rr.response.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+
 @Service
 public class JdtPersonService implements RequestResponse, RestApiAction<JdtPersonMasterDTO, JdtJdtPersonDetailDTO, JdtJdtPersonUpdateDTO> {
 
@@ -22,6 +25,13 @@ public class JdtPersonService implements RequestResponse, RestApiAction<JdtPerso
     @Override
     public MessageResponse create(RequestData<JdtJdtPersonDetailDTO> data) {
         JdtPerson entity = requestProcessor().process(data, JdtPerson.class);
+
+        JdtAddress jdtAddress = new JdtAddress();
+        jdtAddress.house = "123";
+        jdtAddress.road = "999";
+        entity.addresses = new HashSet<>();
+        entity.addresses.add(jdtAddress);
+
         jdtPersonRepository.save(entity);
         return responseProcessor().response("Created");
     }
