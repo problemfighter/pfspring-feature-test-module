@@ -30,7 +30,4 @@ public class Person implements RestEntity {
 
     public Boolean isDeleted = false;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "address_id")
-    public Address address;
 }

@@ -11,12 +11,19 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
+    @Column(nullable = false)
     public String country;
+
+    @Column(nullable = false)
     public String city;
+
+    @Column(nullable = false)
     public String region;
+
+    @Column(nullable = false)
     public String postalCode;
 
-
+    @Column(columnDefinition="TEXT")
     public String details;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)

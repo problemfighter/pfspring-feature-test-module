@@ -2,10 +2,9 @@ package com.problemfighter.pfspring.rdbmser.model.entity;
 
 import com.problemfighter.pfspring.rdbmser.model.data.DegreeType;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Degree {
@@ -14,7 +13,16 @@ public class Degree {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
+    @Column(nullable = false)
     public String name;
+
+    @Column(nullable = false)
     public DegreeType type;
+
+    @Column(columnDefinition="TEXT")
     public String description;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable
+    public Set<Person> person = new HashSet<>();
 }

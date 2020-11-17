@@ -11,12 +11,15 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
+    @Column(nullable = false)
     public String firstName;
 
     public String lastName;
 
+    @Column(nullable = false)
     public String email;
 
+    @Column(nullable = false)
     public String password;
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -24,4 +27,7 @@ public class Person {
 
     @OneToOne(mappedBy = "person")
     public Profile profile;
+
+    @ManyToMany(mappedBy = "person")
+    public Set<Degree> degree = new HashSet<>();
 }
