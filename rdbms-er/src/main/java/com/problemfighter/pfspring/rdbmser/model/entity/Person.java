@@ -1,9 +1,8 @@
 package com.problemfighter.pfspring.rdbmser.model.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Person {
@@ -19,4 +18,10 @@ public class Person {
     public String email;
 
     public String password;
+
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    public Set<Address> addresses = new HashSet<>();
+
+    @OneToOne(mappedBy = "person")
+    public Profile profile;
 }
