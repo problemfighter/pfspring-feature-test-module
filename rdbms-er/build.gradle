@@ -1,0 +1,11 @@
+
+group = 'com.problemfighter.pfspring.rdbmser'
+version = '1.0.0'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+}
+
