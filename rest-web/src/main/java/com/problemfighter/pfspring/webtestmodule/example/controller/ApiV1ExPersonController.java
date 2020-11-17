@@ -11,16 +11,16 @@ import com.problemfighter.pfspring.restapi.rr.response.PageableResponse;
 import com.problemfighter.pfspring.webtestmodule.example.model.dto.person.PersonDetailDTO;
 import com.problemfighter.pfspring.webtestmodule.example.model.dto.person.PersonMasterDTO;
 import com.problemfighter.pfspring.webtestmodule.example.model.dto.person.PersonUpdateDTO;
-import com.problemfighter.pfspring.webtestmodule.example.service.PersonService;
+import com.problemfighter.pfspring.webtestmodule.example.service.ExPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/person")
-public class ApiV1PersonController implements RestApiAction<PersonMasterDTO, PersonDetailDTO, PersonUpdateDTO> {
+@RequestMapping("/api/v1/ex-person")
+public class ApiV1ExPersonController implements RestApiAction<PersonMasterDTO, PersonDetailDTO, PersonUpdateDTO> {
 
     @Autowired
-    private PersonService personService;
+    private ExPersonService personService;
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public MessageResponse create(@RequestBody RequestData<PersonDetailDTO> data) {

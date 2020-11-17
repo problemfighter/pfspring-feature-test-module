@@ -9,15 +9,15 @@ import com.problemfighter.pfspring.webtestmodule.example.model.dto.person.Person
 import com.problemfighter.pfspring.webtestmodule.example.model.dto.person.PersonMasterDTO;
 import com.problemfighter.pfspring.webtestmodule.example.model.dto.person.PersonUpdateDTO;
 import com.problemfighter.pfspring.webtestmodule.example.model.entity.ExPerson;
-import com.problemfighter.pfspring.webtestmodule.example.repository.PersonRepository;
+import com.problemfighter.pfspring.webtestmodule.example.repository.ExPersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PersonService implements RequestResponse, RestApiAction<PersonMasterDTO, PersonDetailDTO, PersonUpdateDTO> {
+public class ExPersonService implements RequestResponse, RestApiAction<PersonMasterDTO, PersonDetailDTO, PersonUpdateDTO> {
 
     @Autowired
-    private PersonRepository personRepository;
+    private ExPersonRepository personRepository;
 
     @Override
     public MessageResponse create(RequestData<PersonDetailDTO> data) {

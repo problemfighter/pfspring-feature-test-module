@@ -5,15 +5,15 @@ import com.problemfighter.pfspring.restapi.inter.CopyInterceptor;
 import com.problemfighter.pfspring.webtestmodule.example.model.dto.person.PersonDetailDTO;
 import com.problemfighter.pfspring.webtestmodule.example.model.dto.person.PersonUpdateDTO;
 import com.problemfighter.pfspring.webtestmodule.example.model.entity.ExPerson;
-import com.problemfighter.pfspring.webtestmodule.example.service.PersonService;
+import com.problemfighter.pfspring.webtestmodule.example.service.ExPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PersonCopyIntercept implements CopyInterceptor<ExPerson, PersonDetailDTO, PersonUpdateDTO> {
+public class ExPersonCopyIntercept implements CopyInterceptor<ExPerson, PersonDetailDTO, PersonUpdateDTO> {
 
     @Autowired
-    private PersonService personService;
+    private ExPersonService personService;
 
 
     private void checkEmailAlreadyExist(String email) throws ApiRestException {
