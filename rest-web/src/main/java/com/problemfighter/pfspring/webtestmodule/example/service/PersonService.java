@@ -8,7 +8,7 @@ import com.problemfighter.pfspring.restapi.rr.response.*;
 import com.problemfighter.pfspring.webtestmodule.example.model.dto.person.PersonDetailDTO;
 import com.problemfighter.pfspring.webtestmodule.example.model.dto.person.PersonMasterDTO;
 import com.problemfighter.pfspring.webtestmodule.example.model.dto.person.PersonUpdateDTO;
-import com.problemfighter.pfspring.webtestmodule.example.model.entity.Person;
+import com.problemfighter.pfspring.webtestmodule.example.model.entity.ExPerson;
 import com.problemfighter.pfspring.webtestmodule.example.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,14 +21,14 @@ public class PersonService implements RequestResponse, RestApiAction<PersonMaste
 
     @Override
     public MessageResponse create(RequestData<PersonDetailDTO> data) {
-        Person entity = requestProcessor().process(data, Person.class);
+        ExPerson entity = requestProcessor().process(data, ExPerson.class);
         personRepository.save(entity);
         return responseProcessor().response("Created");
     }
 
     @Override
     public BulkResponse<PersonDetailDTO> bulkCreate(RequestBulkData<PersonDetailDTO> data) {
-        BulkErrorValidEntities<PersonDetailDTO, Person> bulkData = requestProcessor().process(data, Person.class);
+        BulkErrorValidEntities<PersonDetailDTO, ExPerson> bulkData = requestProcessor().process(data, ExPerson.class);
         if (bulkData.isValidEntities()) {
             personRepository.saveAll(bulkData.getEntities());
         }
@@ -58,15 +58,15 @@ public class PersonService implements RequestResponse, RestApiAction<PersonMaste
     @Override
     public MessageResponse update(RequestData<PersonUpdateDTO> data) {
         Long id = requestProcessor().validateId(data, "Id not found");
-        Person entity = dataUtil().validateAndOptionToEntity(personRepository.findById(id), "Content not found");
+        ExPerson entity = dataUtil().validateAndOptionToEntity(personRepository.findById(id), "Content not found");
         personRepository.save(entity);
         return responseProcessor().response("Updated");
     }
 
     @Override
     public BulkResponse<PersonUpdateDTO> bulkUpdate(RequestBulkData<PersonUpdateDTO> data) {
-        Iterable<Person> entities = personRepository.findAllById(dataUtil().getAllId(data));
-        BulkErrorValidEntities<PersonUpdateDTO, Person> bulkData = dataUtil().merge(entities, data);
+        Iterable<ExPerson> entities = personRepository.findAllById(dataUtil().getAllId(data));
+        BulkErrorValidEntities<PersonUpdateDTO, ExPerson> bulkData = dataUtil().merge(entities, data);
         if (bulkData.isValidEntities()) {
             personRepository.saveAll(bulkData.getEntities());
         }
@@ -75,7 +75,7 @@ public class PersonService implements RequestResponse, RestApiAction<PersonMaste
 
     @Override
     public MessageResponse bulkDelete(RequestBulkData<Long> data) {
-        Iterable<Person> entities = personRepository.findAllById(data.getData());
+        Iterable<ExPerson> entities = personRepository.findAllById(data.getData());
         if (dataUtil().isEmpty(entities)) {
             return responseProcessor().error("Content not found");
         }
@@ -86,7 +86,7 @@ public class PersonService implements RequestResponse, RestApiAction<PersonMaste
 
     @Override
     public MessageResponse hardDelete(RequestBulkData<Long> data) {
-        Iterable<Person> entities = personRepository.findAllById(data.getData());
+        Iterable<ExPerson> entities = personRepository.findAllById(data.getData());
         if (dataUtil().isEmpty(entities)) {
             return responseProcessor().error("Content not found");
         }
@@ -97,7 +97,7 @@ public class PersonService implements RequestResponse, RestApiAction<PersonMaste
     @Override
     public MessageResponse delete(Long id) {
         id = requestProcessor().validateId(id, "Id not found");
-        Person entity = dataUtil().validateAndOptionToEntity(personRepository.findById(id), "Content not found");
+        ExPerson entity = dataUtil().validateAndOptionToEntity(personRepository.findById(id), "Content not found");
         dataUtil().markAsDeleted(entity);
         personRepository.save(entity);
         return responseProcessor().response("Deleted");
@@ -105,7 +105,7 @@ public class PersonService implements RequestResponse, RestApiAction<PersonMaste
 
     @Override
     public MessageResponse bulkRestore(RequestBulkData<Long> data) {
-        Iterable<Person> entities = personRepository.findAllById(data.getData());
+        Iterable<ExPerson> entities = personRepository.findAllById(data.getData());
         if (dataUtil().isEmpty(entities)) {
             return responseProcessor().error("Content not found");
         }
@@ -118,7 +118,7 @@ public class PersonService implements RequestResponse, RestApiAction<PersonMaste
         return personRepository.findByEmail(email) != null;
     }
 
-    public Person findByEmailAndId(String email, Long id) {
+    public ExPerson findByEmailAndId(String email, Long id) {
         return personRepository.findByEmailAndId(email, id);
     }
 }

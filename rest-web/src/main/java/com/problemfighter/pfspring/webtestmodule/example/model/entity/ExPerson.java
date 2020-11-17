@@ -5,7 +5,7 @@ import com.problemfighter.pfspring.restapi.inter.model.RestEntity;
 import javax.persistence.*;
 
 @Entity
-public class Person implements RestEntity {
+public class ExPerson implements RestEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

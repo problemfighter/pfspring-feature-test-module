@@ -4,13 +4,13 @@ import com.problemfighter.pfspring.restapi.common.ApiRestException;
 import com.problemfighter.pfspring.restapi.inter.CopyInterceptor;
 import com.problemfighter.pfspring.webtestmodule.example.model.dto.person.PersonDetailDTO;
 import com.problemfighter.pfspring.webtestmodule.example.model.dto.person.PersonUpdateDTO;
-import com.problemfighter.pfspring.webtestmodule.example.model.entity.Person;
+import com.problemfighter.pfspring.webtestmodule.example.model.entity.ExPerson;
 import com.problemfighter.pfspring.webtestmodule.example.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PersonCopyIntercept implements CopyInterceptor<Person, PersonDetailDTO, PersonUpdateDTO> {
+public class PersonCopyIntercept implements CopyInterceptor<ExPerson, PersonDetailDTO, PersonUpdateDTO> {
 
     @Autowired
     private PersonService personService;
@@ -23,24 +23,24 @@ public class PersonCopyIntercept implements CopyInterceptor<Person, PersonDetail
     }
 
     @Override
-    public void meAsSrc(PersonUpdateDTO source, Person destination) {
+    public void meAsSrc(PersonUpdateDTO source, ExPerson destination) {
         if (personService.findByEmailAndId(source.email, source.id) == null) {
             checkEmailAlreadyExist(source.email);
         }
     }
 
     @Override
-    public void meAsDst(Person source, PersonUpdateDTO destination) {
+    public void meAsDst(ExPerson source, PersonUpdateDTO destination) {
 
     }
 
     @Override
-    public void meAsSrc(PersonDetailDTO source, Person destination) {
+    public void meAsSrc(PersonDetailDTO source, ExPerson destination) {
         checkEmailAlreadyExist(source.email);
     }
 
     @Override
-    public void meAsDst(Person source, PersonDetailDTO destination) {
+    public void meAsDst(ExPerson source, PersonDetailDTO destination) {
 
     }
 }
