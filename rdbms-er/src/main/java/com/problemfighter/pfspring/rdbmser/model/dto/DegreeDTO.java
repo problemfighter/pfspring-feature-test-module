@@ -1,9 +1,6 @@
 package com.problemfighter.pfspring.rdbmser.model.dto;
 
 import com.problemfighter.pfspring.rdbmser.model.data.DegreeType;
-import com.problemfighter.pfspring.rdbmser.model.entity.Person;
-
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
