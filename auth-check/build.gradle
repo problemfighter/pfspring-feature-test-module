@@ -1,0 +1,12 @@
+
+group = 'com.problemfighter.pfspring.authcheck'
+version = '1.0.0'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+
+}
+
