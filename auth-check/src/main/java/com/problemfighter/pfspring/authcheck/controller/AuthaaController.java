@@ -1,9 +1,7 @@
 package com.problemfighter.pfspring.authcheck.controller;
 
 import com.problemfighter.pfspring.authcheck.model.data.AuthPerson;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,23 +24,37 @@ public class AuthaaController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public List<AuthPerson> add() {
-        return persons;
+    public String add(@RequestBody AuthPerson authPerson) {
+        if (authPerson == null){
+            return "Invalid Data";
+        }
+        persons.add(authPerson);
+        return "Added";
     }
 
-    @RequestMapping(value = "/get", method = RequestMethod.POST)
-    public AuthPerson get() {
-        return persons.get(0);
+    @RequestMapping(value = "/get/{id}", method = RequestMethod.POST)
+    public AuthPerson get(@PathVariable("id") Integer id) {
+        return persons.get(id);
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public List<AuthPerson> update() {
-        return persons;
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+    public String update(@PathVariable("id") Integer id, @RequestBody AuthPerson authPerson) {
+        AuthPerson authPersonExist = persons.get(id);
+        if (authPersonExist == null || authPerson == null){
+            return "Invalid Index or invalid data";
+        }
+        persons.set(id, authPerson);
+        return "Updated";
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-    public List<AuthPerson> delete() {
-        return persons;
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    public String delete(@PathVariable("id") Integer id) {
+        AuthPerson authPersonExist = persons.get(id);
+        if (authPersonExist == null || id == null) {
+            return "Invalid Index";
+        }
+        persons.remove(id);
+        return "Removed";
     }
 
 }
