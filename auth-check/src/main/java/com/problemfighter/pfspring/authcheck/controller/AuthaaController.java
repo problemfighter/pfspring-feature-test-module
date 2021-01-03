@@ -4,18 +4,19 @@ import com.problemfighter.pfspring.authcheck.model.data.AuthPerson;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/auth-aa")
 public class AuthaaController {
 
-    private static final List<AuthPerson> persons = Arrays.asList(
+    private static final List<AuthPerson> persons = new LinkedList<>(Arrays.asList(
             new AuthPerson("Abul", 1),
             new AuthPerson("Babul", 2),
             new AuthPerson("Kabul", 3),
             new AuthPerson("Sabul", 4)
-    );
+    ));
 
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -32,7 +33,7 @@ public class AuthaaController {
         return "Added";
     }
 
-    @RequestMapping(value = "/get/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
     public AuthPerson get(@PathVariable("id") Integer id) {
         return persons.get(id);
     }
